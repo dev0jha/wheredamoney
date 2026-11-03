@@ -60,6 +60,13 @@ export function LiquidGlass({
   useEffect(() => {
     const el = rootRef.current;
     if (!el || mode !== "pending") return;
+    const measure = () => {
+      const rect = el.getBoundingClientRect();
+      const w = Math.max(1, Math.round(rect.width || el.offsetWidth));
+      const h = Math.max(1, Math.round(rect.height || el.offsetHeight));
+      if (w > 1 && h > 1) setSize((prev) => (prev.w === w && prev.h === h ? prev : { w, h }));
+    };
+    measure();
     const ro = new ResizeObserver(([entry]) => {
       if (!entry) return;
       // Border box, so the map matches the backdrop-filter layer.
@@ -182,6 +189,7 @@ function prefersReducedTransparency() {
 
 function isSafariLike() {
   if (typeof navigator === "undefined") return false;
+  if (typeof window !== "undefined" && Boolean((window as unknown as { chrome?: unknown }).chrome)) return false;
   const ua = navigator.userAgent;
   return /Safari/.test(ua) && !/Chrome|Chromium|Edg|OPR/.test(ua);
 }
