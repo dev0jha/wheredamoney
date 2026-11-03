@@ -56,7 +56,7 @@ export function MobileNav() {
 								onClick={() => setOpen(false)}
 								className={cn(
 									buttonVariants({ variant: "outline" }),
-									"w-full justify-center rounded-md"
+									"w-full justify-center rounded-lg"
 								)}
 							>
 								Sign In
@@ -66,7 +66,7 @@ export function MobileNav() {
 								onClick={() => setOpen(false)}
 								className={cn(
 									buttonVariants(),
-									"w-full justify-center rounded-md bg-[#4F39F6] hover:bg-[#4F39F6]/90 border-[#4F39F6] text-white"
+									"w-full justify-center rounded-lg bg-[#4F39F6] hover:bg-[#4F39F6]/90 border-[#4F39F6] text-white"
 								)}
 							>
 								Get Started

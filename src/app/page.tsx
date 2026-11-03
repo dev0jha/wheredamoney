@@ -2,7 +2,6 @@ import Link from "next/link";
 import {
   IconArrowRight,
   IconChartBar,
-  IconCheck,
   IconFileText,
   IconLock,
   IconMail,
@@ -13,6 +12,7 @@ import {
 
 import { Logo } from "@/components/logo";
 import { Header } from "@/components/header";
+import { BanknoteIcon } from "@/components/ui/banknote-icon";
 import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -76,35 +76,20 @@ export default function Home() {
       <main className="relative flex-1">
         {/* Hero Section */}
         <section id="about" className="mx-auto flex w-full max-w-5xl flex-col items-center px-6 pb-24 pt-16 text-center sm:pt-20 lg:pb-32 lg:pt-24">
-          <div className="inline-flex items-center overflow-hidden rounded-lg border border-[#282525] text-xs font-semibold text-[#282525] shadow-2xs">
-            <span className="bg-[#282525] px-3 py-2 font-mono text-[11px] text-white">NEW</span>
-            <span className="px-3 py-2">Your money, finally clear.</span>
-          </div>
-
-          <div className="mt-12 max-w-4xl space-y-6 sm:mt-14">
+          <div className="max-w-4xl space-y-6">
             <h1 className="font-cooper text-5xl leading-[0.98] tracking-[-0.045em] text-[#282525] text-balance sm:text-6xl lg:text-8xl">
-              Know where every rupee goes.
+              Know{" "}
+              <span className="relative inline-block">
+                <span className="pointer-events-none absolute -top-[11px] right-[-24px] -rotate-[12deg] select-none sm:-top-[15px] sm:right-[-32px] sm:-rotate-[14deg] lg:-top-[18px] lg:right-[-42px]">
+                  <BanknoteIcon className="h-10 w-14 sm:h-14 sm:w-20 lg:h-18 lg:w-24 drop-shadow-sm" />
+                </span>
+                where
+              </span>{" "}
+              every rupee goes.
             </h1>
             <p className="mx-auto max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
               Track income, expenses, and the choices behind them in one calm, private ledger.
-              <br className="hidden sm:block" />
-              Clarity for every month, without the spreadsheet headache.
             </p>
-          </div>
-
-          <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
-            <Link href="/register" className={buttonVariants({ size: "lg", className: "rounded-md px-6 font-mono text-sm" })}>
-              Start tracking free <IconArrowRight className="size-4" />
-            </Link>
-            <Link href="/login" className={buttonVariants({ variant: "outline", size: "lg", className: "rounded-md px-6 font-mono text-sm" })}>
-              Sign in
-            </Link>
-          </div>
-
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs text-muted-foreground">
-            <span className="flex items-center gap-1.5"><IconCheck className="size-3.5 text-success" /> No bank connection</span>
-            <span className="flex items-center gap-1.5"><IconCheck className="size-3.5 text-success" /> 100% private</span>
-            <span className="flex items-center gap-1.5"><IconCheck className="size-3.5 text-success" /> Set up in 60 seconds</span>
           </div>
         </section>
 

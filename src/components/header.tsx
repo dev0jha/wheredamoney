@@ -1,26 +1,13 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { cn } from "@/lib/utils";
-import { Logo } from "@/components/logo";
 import { useScroll } from "@/hooks/use-scroll";
-import { buttonVariants } from "@/components/ui/button";
-import { MobileNav } from "@/components/mobile-nav";
+import { LiquidGlass } from "@/components/ui/liquid-glass";
+import StripeButton from "@/components/pixel-perfect/stripe-button";
 
-export const navLinks = [
-	{
-		label: "Features",
-		href: "#features",
-	},
-	{
-		label: "Pricing",
-		href: "#pricing",
-	},
-	{
-		label: "About",
-		href: "#about",
-	},
-];
+export const navLinks: { label: string; href: string }[] = [];
 
 export function Header() {
 	const scrolled = useScroll(10);
@@ -28,60 +15,66 @@ export function Header() {
 	return (
 		<header
 			className={cn(
-				"sticky top-0 z-50 w-full transition-[background-color,box-shadow] duration-200",
-				{
-					"bg-background/95 shadow-xs backdrop-blur-sm supports-backdrop-filter:bg-background/50":
-						scrolled,
-				}
+				"sticky z-50 w-full flex justify-center px-4 transition-all duration-300 ease-[cubic-bezier(0.23,1,0.32,1)]",
+				scrolled ? "top-3 sm:top-4" : "top-0"
 			)}
 		>
-			<nav className="mx-auto grid h-14 w-full max-w-6xl grid-cols-[1fr_auto_1fr] items-center px-4 font-[family-name:var(--font-geist-mono)] text-[#282525]">
-				<Link
-					className="flex items-center gap-2 justify-self-start rounded-md transition-opacity hover:opacity-80"
-					href="/"
+			<div
+				className={cn(
+					"relative w-full transition-all duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] flex items-center justify-center",
+					scrolled ? "max-w-3xl" : "max-w-4xl"
+				)}
+			>
+				{/* Liquid Glass Background - active on scroll */}
+				<div
+					className={cn(
+						"absolute inset-0 -z-10 rounded-full overflow-hidden transition-all duration-300 pointer-events-none",
+						scrolled
+							? "opacity-100 shadow-lg shadow-black/5 border border-black/10 dark:border-white/15"
+							: "opacity-0 border-transparent shadow-none"
+					)}
 				>
-					<Logo className="h-4" />
-				</Link>
-
-				<div className="hidden items-center gap-7 md:flex">
-					{navLinks.map((link) => (
-						<Link
-							key={link.label}
-							href={link.href}
-							className="text-sm font-semibold uppercase tracking-[0.08em] text-[#282525] transition-colors hover:text-foreground"
-						>
-							{link.label}
-						</Link>
-					))}
+					<LiquidGlass
+						radius={999}
+						bevelDepth={12}
+						scale={40}
+						aberration={4}
+						frost={0}
+						tint={0.12}
+						className="size-full"
+					/>
 				</div>
 
-				<div className="flex items-center justify-self-end">
-					<div className="hidden items-center gap-3 md:flex">
-						<Link
-							href="/login"
-							className={cn(
-								buttonVariants({
-									variant: "outline",
-									size: "sm",
-								}),
-								"rounded-md px-4 text-[#282525]"
-							)}
-						>
-							Sign In
-						</Link>
-						<Link
-							href="/register"
-							className={cn(
-								buttonVariants({ size: "sm" }),
-								"rounded-md px-5 bg-[#4F39F6] hover:bg-[#4F39F6]/90 border-[#4F39F6] text-white"
-							)}
-						>
-							Get Started
-						</Link>
+				<nav
+					className={cn(
+						"flex h-14 w-full items-center justify-between font-[family-name:var(--font-geist-mono)] text-[#282525] transition-all duration-300",
+						scrolled ? "px-5 sm:px-6" : "px-0 sm:px-4"
+					)}
+				>
+					<Link
+						className="flex items-center gap-2.5 rounded-md"
+						href="/"
+					>
+						<Image
+							src="/logo.png"
+							alt="WhereDaMoney"
+							width={38}
+							height={38}
+							className="size-9 object-contain"
+							priority
+						/>
+						<span className="font-[family-name:var(--font-geist-mono)] text-base font-semibold tracking-tight text-[#282525]">
+							WhereDaMoney
+						</span>
+					</Link>
+
+					<div className="flex items-center">
+						<StripeButton href="/register" className="px-5 py-1.5 text-sm font-semibold">
+							Sign Up
+						</StripeButton>
 					</div>
-					<MobileNav />
-				</div>
-			</nav>
+				</nav>
+			</div>
 		</header>
 	);
 }

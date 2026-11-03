@@ -23,6 +23,7 @@
   "menuAccent": "subtle",
   "registries": {
     "@coss": "https://coss.com/ui/r/{name}.json",
-    "@efferd": "https://efferd.com/r/{style}/{name}.json"
+    "@efferd": "https://efferd.com/r/{style}/{name}.json",
+    "@aceternity": "https://ui.aceternity.com/registry/{name}.json"
   }
 }

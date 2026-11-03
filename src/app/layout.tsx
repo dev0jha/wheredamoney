@@ -1,8 +1,14 @@
 import type { Metadata, Viewport } from "next";
-import { Geist_Mono, Inter } from "next/font/google";
+import { Geist, Geist_Mono, Inter } from "next/font/google";
 import "./globals.css";
 import { ToastProvider } from "@/components/ui/toast";
 import { cn } from "@/lib/utils";
+
+const geist = Geist({
+  subsets: ["latin"],
+  variable: "--font-geist",
+  display: "swap",
+});
 
 const inter = Inter({
   subsets: ["latin"],
@@ -37,9 +43,13 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={cn("h-full antialiased font-sans", inter.variable, geistMono.variable)}
+      suppressHydrationWarning
+      className={cn("h-full antialiased font-sans", inter.variable, geist.variable, geistMono.variable)}
     >
-      <body className="min-h-full bg-background font-sans text-foreground selection:bg-primary selection:text-primary-foreground">
+      <body
+        suppressHydrationWarning
+        className="min-h-full bg-background font-sans text-foreground selection:bg-primary selection:text-primary-foreground"
+      >
         <ToastProvider position="bottom-right">{children}</ToastProvider>
       </body>
     </html>
