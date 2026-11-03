@@ -1,10 +1,12 @@
 import type { NextConfig } from "next";
 
+const apiUrl = process.env.API_INTERNAL_URL ?? "http://127.0.0.1:8080";
+
 const nextConfig: NextConfig = {
-  /* config options here */
   cacheComponents: true,
   partialPrefetching: true,
   reactCompiler: true,
+  output: "standalone",
   turbopack: {
     rules: {
       "*.css": {
@@ -12,6 +14,14 @@ const nextConfig: NextConfig = {
         as: "*.css",
       },
     },
+  },
+  async rewrites() {
+    return [
+      {
+        source: "/api/v1/:path*",
+        destination: `${apiUrl}/api/v1/:path*`,
+      },
+    ];
   },
 };
 

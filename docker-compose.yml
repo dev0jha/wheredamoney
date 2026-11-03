@@ -1,0 +1,119 @@
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: wheredamoney
+      POSTGRES_PASSWORD: wheredamoney
+      POSTGRES_DB: wheredamoney
+    ports:
+      - "5433:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U wheredamoney -d wheredamoney"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    command: ["redis-server", "--appendonly", "yes"]
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  mailpit:
+    image: axllent/mailpit:latest
+    restart: unless-stopped
+    ports:
+      - "1025:1025"
+      - "8025:8025"
+    environment:
+      MP_SMTP_AUTH_ACCEPT_ANY: "1"
+      MP_SMTP_AUTH_ALLOW_INSECURE: "1"
+
+  migrate:
+    image: oven/bun:1.4.4
+    working_dir: /app
+    volumes:
+      - .:/app
+    environment:
+      DATABASE_URL: postgres://wheredamoney:wheredamoney@db:5432/wheredamoney
+    command: ["sh", "-c", "bun install --frozen-lockfile && bun run db:migrate"]
+    depends_on:
+      db:
+        condition: service_healthy
+
+  api:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+      target: api
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: postgres://wheredamoney:wheredamoney@db:5432/wheredamoney
+      REDIS_URL: redis://redis:6379
+      API_ADDR: ":8080"
+      APP_ORIGIN: http://localhost:3000
+      SESSION_COOKIE_SECURE: "false"
+      SMTP_ADDR: mailpit:1025
+      SMTP_FROM: WhereDaMoney <hello@wheredamoney.local>
+    ports:
+      - "8080:8080"
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  worker:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+      target: worker
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: postgres://wheredamoney:wheredamoney@db:5432/wheredamoney
+      REDIS_URL: redis://redis:6379
+      SMTP_ADDR: mailpit:1025
+      SMTP_FROM: WhereDaMoney <hello@wheredamoney.local>
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.web
+    restart: unless-stopped
+    environment:
+      API_INTERNAL_URL: http://api:8080
+      NEXT_PUBLIC_APP_URL: http://localhost:3000
+      NODE_ENV: production
+    ports:
+      - "3000:3000"
+    depends_on:
+      - api
+
+  adminer:
+    image: adminer:latest
+    restart: unless-stopped
+    ports:
+      - "8081:8080"
+    profiles: ["tools"]
+    depends_on:
+      - db
+
+volumes:
+  db_data:
+  redis_data:
