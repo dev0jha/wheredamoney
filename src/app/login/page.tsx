@@ -19,18 +19,7 @@ export default async function LoginPage({
   }
   const params = await searchParams;
   return (
-    <AuthShell
-      title="Welcome back"
-      description="Sign in to see where your money went."
-      footer={
-        <span>
-          New here?{" "}
-          <a href="/register" className="font-medium text-primary hover:underline">
-            Create an account
-          </a>
-        </span>
-      }
-    >
+    <AuthShell>
       <LoginForm next={params.next} verified={params.verified} reset={params.reset} />
     </AuthShell>
   );

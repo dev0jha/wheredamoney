@@ -7,9 +7,10 @@ interface StripeButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement
 }
 
 const StripeButton = React.forwardRef<HTMLButtonElement, StripeButtonProps>(
-  ({ className, children, href, ...props }, ref) => {
+  ({ className, children, href, disabled, ...props }, ref) => {
     const commonClass = cn(
-      "flex flex-row justify-center items-center px-4 py-2 gap-2 rounded-lg cursor-pointer font-medium transition-all active:scale-95 text-white text-sm select-none hover:brightness-105",
+      "flex flex-row justify-center items-center px-4 py-2.5 gap-2 rounded-lg cursor-pointer font-medium transition-all active:scale-[0.98] text-white text-sm select-none hover:brightness-110",
+      disabled && "opacity-75 cursor-not-allowed pointer-events-none active:scale-100",
       className
     );
     const commonStyle: React.CSSProperties = {
@@ -30,6 +31,7 @@ const StripeButton = React.forwardRef<HTMLButtonElement, StripeButtonProps>(
         ref={ref}
         className={commonClass}
         style={commonStyle}
+        disabled={disabled}
         {...props}
       >
         {children || "Stripe Button"}

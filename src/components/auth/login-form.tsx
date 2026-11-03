@@ -2,11 +2,10 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { IconCircleCheck, IconLock, IconMail, IconShieldExclamation } from "@tabler/icons-react";
+import { IconCircleCheck, IconShieldExclamation } from "@tabler/icons-react";
 import { useState } from "react";
 
-import { Button } from "@/components/ui/button";
-import { FormField as Field } from "@/components/ui/form-field";
+import StripeButton from "@/components/pixel-perfect/stripe-button";
 import { Input } from "@/components/ui/input";
 import { ClientApiError, clientFetch } from "@/lib/client-api";
 import type { User } from "@/lib/types";
@@ -40,13 +39,17 @@ export function LoginForm({
       router.replace(next && next.startsWith("/") ? next : "/dashboard");
       router.refresh();
     } catch (caught) {
-      setError(caught instanceof ClientApiError ? caught.message : "Could not sign you in. Please check your credentials.");
+      setError(
+        caught instanceof ClientApiError
+          ? caught.message
+          : "Could not sign you in. Please check your credentials."
+      );
       setPending(false);
     }
   }
 
   return (
-    <form onSubmit={onSubmit} className="space-y-4">
+    <form onSubmit={onSubmit} className="flex flex-col gap-6 font-[family-name:var(--font-geist-mono)]">
       {verified === "1" ? (
         <div className="flex items-center gap-2 rounded-xl border border-success/30 bg-success/10 p-3 text-xs font-medium text-success">
           <IconCircleCheck className="size-4 shrink-0" />
@@ -68,36 +71,63 @@ export function LoginForm({
         </div>
       ) : null}
 
-      <Field label="Email Address" htmlFor="email">
-        <div className="relative">
-          <IconMail className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
+      <div className="space-y-2 text-center sm:text-left">
+        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-foreground">
+          Welcome back
+        </h1>
+        <p className="text-sm text-muted-foreground">
+          Authenticate to access your profile.
+        </p>
+      </div>
+
+      <div className="space-y-4">
+        {/* Email Field */}
+        <div className="space-y-1.5">
+          <label
+            htmlFor="email"
+            className="text-xs font-medium tracking-wider text-muted-foreground"
+          >
+            Email Address
+          </label>
           <Input
             id="email"
             name="email"
             type="email"
             autoComplete="email"
-            placeholder="name@example.com"
-            className="pl-9"
+            placeholder="someone@domain.com"
             required
             autoFocus
+            className="h-11 border-border/70 bg-background/50 text-foreground placeholder:text-muted-foreground/50 focus-visible:border-primary focus-visible:ring-1 focus-visible:ring-primary/40"
           />
         </div>
-      </Field>
 
-      <Field label="Password" htmlFor="password">
-        <div className="relative">
-          <IconLock className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
+        {/* Password Field */}
+        <div className="space-y-1.5">
+          <div className="flex items-center justify-between">
+            <label
+              htmlFor="password"
+              className="text-xs font-medium tracking-wider text-muted-foreground"
+            >
+              Password
+            </label>
+            <Link
+              href="/forgot-password"
+              className="text-xs text-muted-foreground transition-colors hover:text-foreground hover:underline"
+            >
+              Forgot password?
+            </Link>
+          </div>
           <Input
             id="password"
             name="password"
             type="password"
             autoComplete="current-password"
             placeholder="••••••••"
-            className="pl-9"
             required
+            className="h-11 border-border/70 bg-background/50 text-foreground placeholder:text-muted-foreground/50 focus-visible:border-primary focus-visible:ring-1 focus-visible:ring-primary/40"
           />
         </div>
-      </Field>
+      </div>
 
       {error ? (
         <div className="rounded-xl border border-destructive/20 bg-destructive/10 p-3 text-xs font-medium text-destructive">
@@ -105,21 +135,34 @@ export function LoginForm({
         </div>
       ) : null}
 
-      <Button type="submit" className="w-full" loading={pending} disabled={pending}>
-        {pending ? "Signing in..." : "Sign in to account"}
-      </Button>
-
-      <div className="flex items-center justify-between pt-2 text-xs">
-        <Link
-          href="/forgot-password"
-          className="text-muted-foreground transition-colors hover:text-foreground"
+      <div className="space-y-4 pt-1">
+        <StripeButton
+          type="submit"
+          className="w-full h-11"
+          disabled={pending}
         >
-          Forgot password?
-        </Link>
-        <Link href="/register" className="font-semibold text-primary transition-colors hover:underline">
-          Create account
-        </Link>
+          {pending ? (
+            <span className="flex items-center gap-2">
+              <span className="h-2 w-2 animate-pulse rounded-full bg-white" />
+              Verifying...
+            </span>
+          ) : (
+            "Login"
+          )}
+        </StripeButton>
+
+        <div className="text-center text-xs text-muted-foreground">
+          No Account?{" "}
+          <Link
+            href="/register"
+            className="px-1 font-semibold text-primary underline-offset-4 transition-colors hover:underline"
+          >
+            Create one
+          </Link>
+        </div>
       </div>
     </form>
   );
 }
+
+export default LoginForm;

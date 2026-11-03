@@ -14,18 +14,7 @@ export default async function RegisterPage() {
     redirect("/dashboard");
   }
   return (
-    <AuthShell
-      title="Create your account"
-      description="Start with one income and one expense. It takes about two minutes."
-      footer={
-        <span>
-          Already have an account?{" "}
-          <a href="/login" className="font-medium text-primary hover:underline">
-            Sign in
-          </a>
-        </span>
-      }
-    >
+    <AuthShell>
       <RegisterForm />
     </AuthShell>
   );

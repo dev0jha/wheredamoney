@@ -1,8 +1,8 @@
-import Link from "next/link";
-import { IconArrowLeft } from "@tabler/icons-react";
-
+import Image from "next/image";
+import { cn } from "@/lib/utils";
+import { CornerDecorations } from "@/components/ui/corner-decorations";
+import BackBtn from "@/components/back-btn";
 import { Logo } from "@/components/logo";
-import { Card, CardContent } from "@/components/ui/card";
 
 export function AuthShell({
   title,
@@ -10,47 +10,91 @@ export function AuthShell({
   children,
   footer,
 }: {
-  title: string;
-  description: string;
+  title?: string;
+  description?: string;
   children: React.ReactNode;
   footer?: React.ReactNode;
 }) {
   return (
-    <div className="relative flex min-h-dvh flex-col bg-background selection:bg-primary selection:text-primary-foreground">
-      {/* Subtle ambient lighting */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 top-0 h-96 bg-gradient-to-b from-primary/5 via-primary/2 to-transparent blur-3xl"
-      />
+    <div className="relative flex min-h-dvh w-full items-start justify-center overflow-x-hidden overflow-y-auto bg-background px-4 pb-12 pt-20 sm:items-center sm:px-6 sm:pb-8 sm:pt-14 lg:pt-6 selection:bg-primary selection:text-primary-foreground font-[family-name:var(--font-geist-mono)]">
+      {/* Main Container: Auth Card and Authpage Image side-by-side */}
+      <main className="relative mx-auto flex w-full max-w-7xl flex-1 items-center justify-center">
+        <div className="grid w-full grid-cols-1 items-center gap-8 lg:grid-cols-2 lg:gap-14">
+          {/* Auth Card Column */}
+          <div className="flex w-full items-center justify-center lg:justify-end">
+            <div className="flex w-full max-w-[430px] flex-col gap-3.5">
+              {/* Back Button positioned directly above the card */}
+              <div>
+                <BackBtn />
+              </div>
 
-      <header className="relative mx-auto flex w-full max-w-5xl items-center justify-between px-6 py-6 sm:py-8">
-        <Logo />
-        <Link
-          href="/"
-          className="inline-flex items-center gap-1.5 text-xs font-semibold text-muted-foreground transition-colors hover:text-foreground active:scale-95"
-        >
-          <IconArrowLeft className="size-3.5" /> Back home
-        </Link>
-      </header>
+              <div className="relative w-full">
+                {/* Corner Accents */}
+                <CornerDecorations />
 
-      <main className="relative flex flex-1 items-center justify-center px-4 pb-16 sm:px-6">
-        <div className="w-full max-w-md">
-          <div className="mb-6 space-y-1.5 text-center">
-            <h1 className="text-2xl font-bold tracking-tight text-foreground font-heading sm:text-3xl">
-              {title}
-            </h1>
-            <p className="text-sm text-muted-foreground text-balance">{description}</p>
+                <div
+                  className={cn(
+                    "relative border-2 border-border/50 p-6 sm:p-8",
+                    "transition-all duration-200"
+                  )}
+                >
+                <div>
+                  {/* Brand Logo Header */}
+                  <div className="mb-5 flex items-center gap-2">
+                    <Logo />
+                  </div>
+
+                  {title ? (
+                    <div className="mb-4 space-y-1">
+                      <h1 className="font-heading text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
+                        {title}
+                      </h1>
+                      {description ? (
+                        <p className="text-sm text-muted-foreground">{description}</p>
+                      ) : null}
+                    </div>
+                  ) : null}
+
+                  {children}
+
+                  {footer ? (
+                    <div className="mt-4 text-center text-xs text-muted-foreground">
+                      {footer}
+                    </div>
+                  ) : null}
+                </div>
+              </div>
+            </div>
           </div>
+        </div>
 
-          <Card className="overflow-hidden shadow-md">
-            <CardContent className="p-6 sm:p-8">{children}</CardContent>
-          </Card>
+          {/* Right Column: authpage Illustration */}
+          <div className="relative hidden w-full items-center justify-center lg:flex lg:justify-start">
+            <div className="relative h-[620px] w-full max-w-xl xl:h-[720px] xl:max-w-2xl">
+              <div className="relative h-full w-full">
+                <Image
+                  src="/authpage-faded.png"
+                  alt="WhereDaMoney Auth Illustration"
+                  fill
+                  className="object-contain"
+                  priority
+                />
+              </div>
 
-          {footer ? (
-            <div className="mt-5 text-center text-xs text-muted-foreground">{footer}</div>
-          ) : null}
+              {/* Deep Bottom fade into background */}
+              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-72 bg-gradient-to-t from-background from-30% via-background/85 to-transparent" />
+
+              {/* Right edge fade into background */}
+              <div className="pointer-events-none absolute inset-y-0 right-0 w-44 bg-gradient-to-l from-background from-20% via-background/80 to-transparent" />
+
+              {/* Bottom-right corner blend */}
+              <div className="pointer-events-none absolute bottom-0 right-0 h-64 w-64 bg-[radial-gradient(circle_at_bottom_right,var(--background)_35%,transparent_75%)]" />
+            </div>
+          </div>
         </div>
       </main>
     </div>
   );
 }
+
+export default AuthShell;
