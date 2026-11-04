@@ -5,11 +5,9 @@ import { IconShieldExclamation, IconWallet } from "@tabler/icons-react";
 
 import { Logo } from "@/components/logo";
 import { DockNav } from "@/components/app/dock-nav";
-import { LogoutButton } from "@/components/app/logout-button";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { UserAvatarMenu } from "@/components/examples/c-avatar-35";
 import { LiquidGlass } from "@/components/ui/liquid-glass";
 import { requireUser } from "@/lib/api";
-import { initials } from "@/lib/utils";
 
 export default async function AppLayout({ children }: LayoutProps<"/">) {
   const user = await requireUser();
@@ -34,18 +32,8 @@ export default async function AppLayout({ children }: LayoutProps<"/">) {
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
           <Logo href="/dashboard" />
 
-          {/* User Identity & Logout */}
-          <div className="flex items-center gap-3">
-            <div className="flex items-center gap-2 rounded-full border border-border/80 bg-card/60 py-1 pl-1.5 pr-2 sm:pr-3 text-xs shadow-2xs">
-              <Avatar className="size-6 sm:size-7 ring-1 ring-border">
-                <AvatarFallback className="text-[10px] font-bold bg-primary/10 text-primary">
-                  {initials(user.name)}
-                </AvatarFallback>
-              </Avatar>
-              <span className="hidden sm:inline-block max-w-[120px] truncate font-medium text-foreground">{user.name}</span>
-            </div>
-            <LogoutButton compact />
-          </div>
+          {/* User Identity & Dropdown Menu */}
+          <UserAvatarMenu user={user} />
         </div>
       </header>
 
