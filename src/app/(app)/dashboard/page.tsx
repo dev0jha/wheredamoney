@@ -55,7 +55,6 @@ export default async function DashboardPage({
   const categories = categoriesPayload.categories;
   const recent = recentPayload.transactions;
   const currency = user.currency;
-  const isEmpty = summary.income_count === 0 && summary.expense_count === 0;
 
   const current = trends.at(-1);
   const previous = trends.at(-2);
@@ -80,28 +79,6 @@ export default async function DashboardPage({
           </div>
         }
       />
-
-      {isEmpty ? (
-        <Card className="border-dashed bg-card/60">
-          <EmptyState
-            icon={IconSparkles}
-            title={`No entries for ${monthLabel(month)} yet`}
-            description="Add your first income or expense to see visual totals, spending trends, and breakdown charts."
-            action={
-              <div className="flex flex-wrap justify-center gap-2.5 pt-2">
-                <Link href="/incomes/new" className={buttonVariants({ variant: "outline" })}>
-                  <IconArrowDownRight className="size-4 text-success" />
-                  Add income
-                </Link>
-                <Link href="/expenses/new" className={buttonVariants()}>
-                  <IconPlus className="size-4" />
-                  Add expense
-                </Link>
-              </div>
-            }
-          />
-        </Card>
-      ) : null}
 
       <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         <StatCard

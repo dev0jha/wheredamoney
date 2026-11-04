@@ -7,6 +7,7 @@ import { Logo } from "@/components/logo";
 import { DockNav } from "@/components/app/dock-nav";
 import { LogoutButton } from "@/components/app/logout-button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { LiquidGlass } from "@/components/ui/liquid-glass";
 import { requireUser } from "@/lib/api";
 import { initials } from "@/lib/utils";
 
@@ -16,7 +17,20 @@ export default async function AppLayout({ children }: LayoutProps<"/">) {
   return (
     <div className="relative flex min-h-dvh flex-col bg-background">
       {/* Top Header */}
-      <header className="sticky top-0 z-30 border-b border-border/70 bg-background/80 backdrop-blur-xl">
+      <header className="sticky top-0 z-30">
+        {/* Liquid Glass Background */}
+        <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none">
+          <LiquidGlass
+            radius={0}
+            bevelDepth={12}
+            scale={40}
+            aberration={4}
+            frost={0}
+            tint={0.12}
+            className="size-full"
+          />
+        </div>
+
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
           <Logo href="/dashboard" />
 
