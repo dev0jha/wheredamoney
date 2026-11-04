@@ -6,6 +6,7 @@ import { IconShieldExclamation, IconWallet } from "@tabler/icons-react";
 import { Logo } from "@/components/logo";
 import { DockNav } from "@/components/app/dock-nav";
 import { UserAvatarMenu } from "@/components/examples/c-avatar-35";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { LiquidGlass } from "@/components/ui/liquid-glass";
 import { requireUser } from "@/lib/api";
 
@@ -32,8 +33,11 @@ export default async function AppLayout({ children }: LayoutProps<"/">) {
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
           <Logo href="/dashboard" />
 
-          {/* User Identity & Dropdown Menu */}
-          <UserAvatarMenu user={user} />
+          {/* User Identity & Theme Toggle */}
+          <div className="flex items-center gap-2">
+            <ThemeToggle />
+            <UserAvatarMenu user={user} />
+          </div>
         </div>
       </header>
 

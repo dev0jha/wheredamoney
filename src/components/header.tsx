@@ -5,6 +5,7 @@ import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { useScroll } from "@/hooks/use-scroll";
 import { LiquidGlass } from "@/components/ui/liquid-glass";
+import { ThemeToggle } from "@/components/theme-toggle";
 import StripeButton from "@/components/pixel-perfect/stripe-button";
 
 export const navLinks: { label: string; href: string }[] = [];
@@ -47,7 +48,7 @@ export function Header() {
 
 				<nav
 					className={cn(
-						"flex h-14 w-full items-center justify-between font-[family-name:var(--font-geist-mono)] text-[#282525] transition-all duration-300",
+						"flex h-14 w-full items-center justify-between font-[family-name:var(--font-geist-mono)] text-foreground transition-all duration-300",
 						scrolled ? "px-5 sm:px-6" : "px-0 sm:px-4"
 					)}
 				>
@@ -63,12 +64,13 @@ export function Header() {
 							className="size-9 object-contain"
 							priority
 						/>
-						<span className="font-[family-name:var(--font-geist-mono)] text-base font-semibold tracking-tight text-[#282525]">
+						<span className="font-[family-name:var(--font-geist-mono)] text-base font-semibold tracking-tight text-foreground">
 							WhereDaMoney
 						</span>
 					</Link>
 
-					<div className="flex items-center">
+					<div className="flex items-center gap-2.5">
+						<ThemeToggle />
 						<StripeButton href="/register" className="px-5 py-1.5 text-sm font-semibold">
 							Sign Up
 						</StripeButton>

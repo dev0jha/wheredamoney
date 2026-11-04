@@ -2,7 +2,7 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
-@custom-variant dark (&:is(.dark *));
+@custom-variant dark (&:where(.dark, .dark *));
 
 :root {
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
@@ -219,51 +219,50 @@ body {
 }
 
 .dark {
-  /* Enforce Pure White Mode (No hardcoded black) */
-  --background: #ffffff;
-  --foreground: #18181b;
-  --card: #ffffff;
-  --card-foreground: #18181b;
-  --popover: #ffffff;
-  --popover-foreground: #18181b;
-  --primary: #4F39F6;
+  --background: #09090b;
+  --foreground: #fafafa;
+  --card: #121215;
+  --card-foreground: #fafafa;
+  --popover: #121215;
+  --popover-foreground: #fafafa;
+  --primary: #6366f1;
   --primary-foreground: #ffffff;
-  --secondary: #f4f4f5;
-  --secondary-foreground: #18181b;
-  --muted: #f4f4f5;
-  --muted-foreground: #71717a;
-  --accent: #f4f4f5;
-  --accent-foreground: #18181b;
+  --secondary: #27272a;
+  --secondary-foreground: #fafafa;
+  --muted: #27272a;
+  --muted-foreground: #a1a1aa;
+  --accent: #27272a;
+  --accent-foreground: #fafafa;
   --destructive: #ef4444;
   --destructive-foreground: #ffffff;
-  --destructive-soft: #fef2f2;
+  --destructive-soft: rgba(239, 68, 68, 0.18);
   --success: #10b981;
   --success-foreground: #ffffff;
-  --success-soft: #ecfdf5;
+  --success-soft: rgba(16, 185, 129, 0.18);
   --warning: #f59e0b;
   --warning-foreground: #ffffff;
-  --warning-soft: #fffbeb;
+  --warning-soft: rgba(245, 158, 11, 0.18);
   --info: #3b82f6;
   --info-foreground: #ffffff;
-  --border: #e4e4e7;
-  --input: #e4e4e7;
-  --ring: #4F39F6;
-  --sidebar: #ffffff;
-  --sidebar-foreground: #18181b;
-  --sidebar-primary: #4F39F6;
+  --border: #27272a;
+  --input: #27272a;
+  --ring: #6366f1;
+  --sidebar: #121215;
+  --sidebar-foreground: #fafafa;
+  --sidebar-primary: #6366f1;
   --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #f4f4f5;
-  --sidebar-accent-foreground: #18181b;
-  --sidebar-border: #e4e4e7;
-  --sidebar-ring: #4F39F6;
-  --chart-1: #4F39F6;
+  --sidebar-accent: #27272a;
+  --sidebar-accent-foreground: #fafafa;
+  --sidebar-border: #27272a;
+  --sidebar-ring: #6366f1;
+  --chart-1: #6366f1;
   --chart-2: #10b981;
   --chart-3: #ef4444;
   --chart-4: #f59e0b;
   --chart-5: #3b82f6;
-  --code: #f4f4f5;
-  --code-foreground: #18181b;
-  --code-highlight: rgba(79, 57, 246, 0.08);
+  --code: #27272a;
+  --code-foreground: #fafafa;
+  --code-highlight: rgba(99, 102, 241, 0.15);
 }
 
 @layer base {

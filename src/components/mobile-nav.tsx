@@ -17,7 +17,7 @@ export function MobileNav() {
 				aria-controls="mobile-menu"
 				aria-expanded={open}
 				aria-label="Toggle menu"
-				className="text-[#282525] md:hidden"
+				className="text-foreground md:hidden"
 				onClick={() => setOpen(!open)}
 				size="icon"
 				variant="outline"
@@ -44,7 +44,7 @@ export function MobileNav() {
 									key={link.label}
 									href={link.href}
 									onClick={() => setOpen(false)}
-									className="flex items-center rounded-lg px-3 py-2.5 text-base font-medium text-[#282525] transition-colors hover:bg-muted hover:text-foreground"
+									className="flex items-center rounded-lg px-3 py-2.5 text-base font-medium text-foreground transition-colors hover:bg-muted hover:text-foreground"
 								>
 									{link.label}
 								</Link>
@@ -66,7 +66,7 @@ export function MobileNav() {
 								onClick={() => setOpen(false)}
 								className={cn(
 									buttonVariants(),
-									"w-full justify-center rounded-lg bg-[#4F39F6] hover:bg-[#4F39F6]/90 border-[#4F39F6] text-white"
+									"w-full justify-center rounded-lg"
 								)}
 							>
 								Get Started

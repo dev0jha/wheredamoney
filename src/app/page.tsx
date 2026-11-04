@@ -17,7 +17,7 @@ export default function Home() {
         {/* Hero Section */}
         <section id="about" className="mx-auto flex w-full max-w-5xl flex-col items-center px-6 pb-24 pt-16 text-center sm:pt-20 lg:pb-32 lg:pt-24">
           <div className="max-w-4xl space-y-6">
-            <h1 className="font-cooper text-5xl leading-[0.98] tracking-[-0.045em] text-[#282525] text-balance sm:text-6xl lg:text-8xl">
+            <h1 className="font-cooper text-5xl leading-[0.98] tracking-[-0.045em] text-foreground text-balance sm:text-6xl lg:text-8xl">
               Know{" "}
               <span className="relative inline-block">
                 <span className="pointer-events-none absolute -top-[11px] right-[-24px] -rotate-[12deg] select-none sm:-top-[15px] sm:right-[-32px] sm:-rotate-[14deg] lg:-top-[18px] lg:right-[-42px]">
